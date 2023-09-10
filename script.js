@@ -1,34 +1,30 @@
-//your code here
+// Array of band names
+let bandNames = [
+  'The Rolling Stones',
+  'Aerosmith',
+  'The Beatles',
+  'Pink Floyd',
+  'Led Zeppelin',
+];
 
-// Input array of band names
-let bandNames = ['The Rolling Stones', 'Aerosmith', 'The Beatles', 'Pink Floyd', 'Led Zeppelin'];
-
-// Function to remove articles and sort lexicographically
-function sortBandNames(bandNames) {
-    // Define a list of common articles
-    const articles = ['the', 'a', 'an'];
-
-    // Create a custom comparison function
-    function compareWithoutArticles(a, b) {
-        // Remove articles from both band names
-        const nameA = a.replace(new RegExp(`\\b(?:${articles.join('|')})\\b`, 'gi'), '').trim();
-        const nameB = b.replace(new RegExp(`\\b(?:${articles.join('|')})\\b`, 'gi'), '').trim();
-
-        // Compare the modified band names lexicographically
-        return nameA.localeCompare(nameB);
-    }
-
-    // Sort the band names using the custom comparison function
-    bandNames.sort(compareWithoutArticles);
+// Function to remove articles from a band name
+function removeArticles(name) {
+  return name.replace(/^(?:The|A|An)\s+/i, '').trim();
 }
 
-// Call the function to sort the band names
-sortBandNames(bandNames);
+// Sort the band names lexicographically
+bandNames.sort((a, b) => {
+  const nameA = removeArticles(a);
+  const nameB = removeArticles(b);
+  return nameA.localeCompare(nameB);
+});
 
-// Display the sorted band names in an HTML list
+// Get the ul element with id "band"
 const ul = document.getElementById('band');
-bandNames.forEach(bandName => {
-    const li = document.createElement('li');
-    li.textContent = bandName;
-    ul.appendChild(li);
+
+// Create and append li elements for each band name
+bandNames.forEach((bandName) => {
+  const li = document.createElement('li');
+  li.textContent = bandName;
+  ul.appendChild(li);
 });
